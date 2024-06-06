@@ -1,0 +1,26 @@
+/* src/components/Header.css */
+.header {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .menuButton {
+    margin-right: 16px;
+  }
+  
+  .title {
+    flex-grow: 1;
+    text-align: left;
+  }
+  
+  .link {
+    text-decoration: none;
+    color: #000;
+    margin: 0 10px;
+    font-weight: bold;
+  }
+  
+  .link:hover {
+    color: #1976d2; /* Цвет при наведении */
+  }
+  
