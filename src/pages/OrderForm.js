@@ -22,10 +22,14 @@ const OrderForm = () => {
       data3: '',
       data4: '',
       clickid: '',
+      ip: '', // Вы можете добавить получение IP-адреса клиента
+      user_agent: navigator.userAgent,
+      referer: document.referrer,
+      browser_locale: navigator.language
     };
 
     try {
-      const response = await fetch('http://localhost/submit-lead.php', {
+      const response = await fetch('https://api.aff1.com/v3/lead.create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -36,7 +40,8 @@ const OrderForm = () => {
       if (response.ok) {
         setShowPopup(true);
       } else {
-        alert('Ошибка при отправке данных. Пожалуйста, попробуйте еще раз.');
+        const errorData = await response.json();
+        alert(`Ошибка при отправке данных: ${errorData.message}`);
       }
     } catch (error) {
       console.error('Ошибка:', error);
