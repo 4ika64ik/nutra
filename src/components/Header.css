@@ -1,26 +1,45 @@
-/* src/components/Header.css */
 .header {
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .menuButton {
-    margin-right: 16px;
-  }
-  
-  .title {
-    flex-grow: 1;
-    text-align: left;
-  }
-  
-  .link {
-    text-decoration: none;
-    color: #000;
-    margin: 0 10px;
-    font-weight: bold;
-  }
-  
-  .link:hover {
-    color: #1976d2; /* Цвет при наведении */
-  }
-  
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 0 20px;
+}
+
+.menuButton {
+  margin-right: 16px;
+}
+
+.title {
+  flex-grow: 1;
+  text-align: left;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.link {
+  text-decoration: none;
+  color: #000;
+  margin: 0 10px;
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+  transition: color 0.3s ease;
+}
+
+.link:hover {
+  color: #1976d2;
+}
+
+.drawerList {
+  width: 250px;
+  padding: 20px;
+}
+
+.drawerItem {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.1rem;
+  color: #000;
+}
+
+.drawerItem:hover {
+  color: #1976d2;
+}

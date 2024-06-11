@@ -1,4 +1,3 @@
-// src/components/Header.js
 import React, { useState } from 'react';
 import { AppBar, Toolbar, Typography, Button, IconButton, Drawer, List, ListItem, ListItemText, Box } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -17,14 +16,14 @@ function Header() {
 
   const drawerList = () => (
     <Box
-      sx={{ width: 250 }}
+      className="drawerList"
       role="presentation"
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
     >
       <List>
         {['Home', 'Product', 'About', 'Contact', 'Login'].map((text) => (
-          <ListItem button key={text} component={Link} to={`/${text.toLowerCase()}`}>
+          <ListItem button key={text} component={Link} to={`/${text.toLowerCase()}`} className="drawerItem">
             <ListItemText primary={text} />
           </ListItem>
         ))}
