@@ -8,11 +8,20 @@ const OrderForm = () => {
   const [phone, setPhone] = useState('');
   const [showPopup, setShowPopup] = useState(false);
   const [subId, setSubId] = useState('');
+  const [token, setToken] = useState('');
 
   useEffect(() => {
-    const subId = localStorage.getItem('_jlMZQcbXbjm9FwRg') || '';
-    setSubId(subId);
-    console.log('Sub-ID:', subId);
+    // Получение subid и token из Keitaro трекера
+    if (window.KTracking) {
+      window.KTracking.ready((subid, token) => {
+        setSubId(subid);
+        setToken(token);
+        console.log('Sub-ID:', subid);
+        console.log('Token:', token);
+      });
+    } else {
+      console.error('KTracking is not defined');
+    }
   }, []);
 
   const handleSubmit = async (e) => {
@@ -38,11 +47,14 @@ const OrderForm = () => {
       data4: '',
       clickid: subId,
       sub_id: subId,
+      token,
       ip,
       user_agent: navigator.userAgent,
       referer: document.referrer,
       browser_locale: navigator.language
     };
+
+    console.log('Sending data:', data); // Вывод всех данных в консоль
 
     try {
       // Отправка данных на промежуточный сервер
@@ -61,6 +73,21 @@ const OrderForm = () => {
         const result = JSON.parse(text);
         console.log('Lead info:', result);
         setShowPopup(true);
+
+        // Отправка данных в Keitaro
+        if (window.Tracker) {
+          window.Tracker.trackClick({
+            sub_id: subId
+          });
+        }
+
+        // Отчет о конверсии в Keitaro
+        const revenue = 0;
+        const status = 'lead';
+        const tid = Math.floor(Math.random() * 1000000000);
+        if (window.KTracking) {
+          window.KTracking.reportConversion(revenue, status, { tid });
+        }
       } else {
         console.error('Ошибка при отправке данных:', text);
         alert(`Ошибка при отправке данных: ${text}`);
@@ -106,6 +133,8 @@ const OrderForm = () => {
             required
           />
         </div>
+        <input type="hidden" id="subIdInput" name="sub_id" value={subId} />
+        <input type="hidden" id="tokenInput" name="token" value={token} />
         <button type="submit" className="submit-button">Enviar</button>
       </form>
       {showPopup && <ThankYouPopup onClose={closePopup} />}
