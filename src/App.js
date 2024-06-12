@@ -14,6 +14,7 @@ import NotificationButton from './components/NotificationButton';
 import SendNotification from './components/SendNotification';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import KeitaroScript from './components/KeitaroScript';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
       </div>
       
       <Footer />
+      
     </Router>
   );
 }
