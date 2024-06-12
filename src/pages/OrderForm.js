@@ -45,24 +45,25 @@ const OrderForm = () => {
     };
 
     try {
-      const response = await fetch('/api/submit', {
+      // Отправка данных в Keitaro
+      const keitaroResponse = await fetch('https://api.offer.store/wm/push.json?id=65-ad5134b6ab48a2a5f51f345a71847707&offer=3&flow=2456', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: JSON.stringify(data)
+        body: new URLSearchParams(data).toString()
       });
 
-      const text = await response.text();
-      console.log('Response text:', text);
+      const keitaroText = await keitaroResponse.text();
+      console.log('Keitaro Response text:', keitaroText);
 
-      if (response.ok) {
-        const result = JSON.parse(text);
-        console.log('Lead info:', result);
+      if (keitaroResponse.ok) {
+        const keitaroResult = JSON.parse(keitaroText);
+        console.log('Keitaro Lead info:', keitaroResult);
         setShowPopup(true);
       } else {
-        console.error('Ошибка при отправке данных:', text);
-        alert(`Ошибка при отправке данных: ${text}`);
+        console.error('Ошибка при отправке данных в Keitaro:', keitaroText);
+        alert(`Ошибка при отправке данных в Keitaro: ${keitaroText}`);
       }
     } catch (error) {
       console.error('Ошибка:', error);
