@@ -4,11 +4,8 @@ module.exports = function(app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: 'https://api.offer.store',
+      target: 'http://localhost:5000',
       changeOrigin: true,
-      pathRewrite: {
-        '^/api': '/wm',
-      },
     })
   );
 };

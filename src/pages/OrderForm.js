@@ -45,21 +45,24 @@ const OrderForm = () => {
     };
 
     try {
-      const response = await fetch('/api/push.json?id=65-ad5134b6ab48a2a5f51f345a71847707&offer=3&flow=2456', {
+      const response = await fetch('/api/submit', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
+          'Content-Type': 'application/json'
         },
-        body: new URLSearchParams(data).toString()
+        body: JSON.stringify(data)
       });
 
+      const text = await response.text();
+      console.log('Response text:', text);
+
       if (response.ok) {
-        const result = await response.json();
+        const result = JSON.parse(text);
         console.log('Lead info:', result);
         setShowPopup(true);
       } else {
-        const errorData = await response.json();
-        alert(`Ошибка при отправке данных: ${errorData.message}`);
+        console.error('Ошибка при отправке данных:', text);
+        alert(`Ошибка при отправке данных: ${text}`);
       }
     } catch (error) {
       console.error('Ошибка:', error);
