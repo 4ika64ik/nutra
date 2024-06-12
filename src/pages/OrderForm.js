@@ -15,17 +15,48 @@ const OrderForm = () => {
     if (window.KTracking) {
       window.KTracking.ready((subid, token) => {
         setSubId(subid);
-        setToken(token);
+        setToken(token || 'default-token'); // Обработка случая, когда token равен null
         console.log('Sub-ID:', subid);
         console.log('Token:', token);
+
+        if (isBot()) {
+          console.warn('Bot detected');
+        }
       });
     } else {
       console.error('KTracking is not defined');
     }
   }, []);
 
+  function isBot() {
+    const botUserAgents = [
+      /googlebot/i,
+      /bingbot/i,
+      /slurp/i,
+      /duckduckbot/i,
+      /baiduspider/i,
+      /yandexbot/i,
+      /sogou/i,
+      /exabot/i,
+      /facebot/i,
+      /ia_archiver/i,
+      /facebookexternalhit\/1\.1/i,
+      /facebookexternalhit\/1\.0/i,
+      /facebook/i,
+      /facebot/i,
+    ];
+
+    const userAgent = navigator.userAgent;
+    return botUserAgents.some(botAgent => botAgent.test(userAgent));
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (isBot()) {
+      alert('Bot detected. Form submission blocked.');
+      return;
+    }
 
     const getIp = async () => {
       const response = await fetch('https://api.ipify.org?format=json');
